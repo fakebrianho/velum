@@ -7,7 +7,7 @@ import {
 	fadeTransition,
 	slideTransition,
 } from '../../index.js'
-
+import { heroTransition } from '../../src/transitions/heroTransition.js'
 
 const router = createRouter({
 	routes: {
@@ -39,6 +39,12 @@ const router = createRouter({
 			from: 'home',
 			to: 'contact',
 			handler: slideTransition,
+		},
+		{
+			name: 'about-contact',
+			from: 'about',
+			to: 'contact',
+			handler: heroTransition,
 		},
 		{
 			name: 'default',
