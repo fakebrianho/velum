@@ -1,13 +1,19 @@
 {
 	"name": "@bh1525/velum",
-	"version": "0.1.0",
+	"version": "0.1.2",
 	"type": "module",
 	"main": "index.js",
 	"exports": {
-		".": "./index.js"
+		".": "./index.js",
+		"./router": "./router/index.js",
+		"./transitions": "./transitions/index.js",
+		"./utils": "./utils/index.js"
 	},
 	"files": [
 		"index.js",
+		"router/",
+		"transitions/",
+		"utils/",
 		"src/"
 	],
 	"scripts": {

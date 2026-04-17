@@ -1,6 +1,5 @@
-import { createTransition } from '../utils/transitionUtil'
-import { findPairs, measurePair, cloneFixed, getRadius } from '../utils'
-import { tweenRect } from '../utils/transitionUtil'
+import { createTransition, tweenRect } from '../utils/transitionUtil.js'
+import { findPairs, measurePair, cloneFixed, getRadius } from '../utils/index.js'
 
 export const heroTransition = createTransition(
 	({ from, to, tl, heroIndex }) => {
