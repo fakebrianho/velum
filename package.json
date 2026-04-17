@@ -1,21 +1,22 @@
 {
-	"name": "fakebrianho-testui",
-	"version": "1.0.0",
-	"main": "index.js",
+	"name": "@bh1525/velum",
+	"version": "0.1.0",
 	"type": "module",
+	"main": "index.js",
 	"exports": {
 		".": "./index.js"
 	},
+	"files": [
+		"index.js",
+		"src/"
+	],
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
 		"dev": "vite"
 	},
-	"author": "",
-	"license": "ISC",
-	"description": "",
-	"dependencies": {
-		"gsap": "^3.13.0",
-		"three": "^0.184.0",
+	"peerDependencies": {
+		"gsap": "^3.0.0"
+	},
+	"devDependencies": {
 		"vite": "^6.4.1"
 	}
 }
