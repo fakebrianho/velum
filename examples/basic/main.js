@@ -10,23 +10,7 @@ import {
 import { heroTransition } from '../../src/transitions/heroTransition.js'
 
 const router = createRouter({
-	routes: {
-		'/': {
-			namespace: 'home',
-		},
-		'/about': {
-			namespace: 'about',
-		},
-		'/work': {
-			namespace: 'work',
-		},
-		'/project': {
-			namespace: 'project',
-		},
-		'/contact': {
-			namespace: 'contact',
-		},
-	},
+	routes: ['/', '/about', '/work', '/project', '/contact'],
 	transitions: [
 		{
 			name: 'home-about',

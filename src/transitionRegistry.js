@@ -46,6 +46,13 @@ function normalizeTransition(entry) {
 		return { name: entry.name || 'anonymous', from: '*', to: '*', handler: entry }
 	}
 
+	// Object shorthand from createTransition() / Transition instances.
+	// Treat a top-level { run() } as the default transition handler.
+	if (!('handler' in entry) && typeof entry.run === 'function') {
+		const { name = 'unnamed', from = '*', to = '*' } = entry
+		return { name, from, to, handler: entry }
+	}
+
 	const { name = 'unnamed', from = '*', to = '*', handler } = entry
 
 	if (typeof handler !== 'function' && typeof handler?.run !== 'function') {

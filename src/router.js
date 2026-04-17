@@ -2,9 +2,77 @@
 import { PageLoader } from './pageLoader.js'
 import { runTransition } from './transition.js'
 import { createTransitionRegistry } from './transitionRegistry.js'
+import { defaultFadeTransition } from './transitions/fade.js'
 
 export function createRouter(options) {
 	return new Router(options)
+}
+
+export function normalizeRoutes(routes = {}, { homeNamespace = 'home' } = {}) {
+	const normalized = {}
+
+	const setRoute = (rawPath, config = {}) => {
+		const path = normalizePath(rawPath)
+		const routeConfig =
+			typeof config === 'string'
+				? { namespace: config }
+				: config && typeof config === 'object'
+					? config
+					: {}
+
+		normalized[path] = {
+			...routeConfig,
+			namespace: routeConfig.namespace || inferNamespaceFromPath(path, homeNamespace),
+		}
+	}
+
+	if (Array.isArray(routes)) {
+		routes.forEach((entry) => {
+			if (typeof entry === 'string') {
+				setRoute(entry)
+				return
+			}
+
+			if (!entry || typeof entry !== 'object' || typeof entry.path !== 'string') {
+				throw new Error(
+					'Router: route entries in array form must be strings or objects with a "path" string',
+				)
+			}
+
+			const { path, ...config } = entry
+			setRoute(path, config)
+		})
+
+		return normalized
+	}
+
+	if (routes && typeof routes === 'object') {
+		Object.entries(routes).forEach(([path, config]) => {
+			setRoute(path, config)
+		})
+		return normalized
+	}
+
+	throw new Error('Router: routes must be an object map or an array')
+}
+
+function normalizePath(path) {
+	if (typeof path !== 'string') {
+		throw new Error('Router: route path must be a string')
+	}
+
+	if (!path.trim()) return '/'
+
+	const withLeadingSlash = path.startsWith('/') ? path : `/${path}`
+	if (withLeadingSlash.length > 1 && withLeadingSlash.endsWith('/')) {
+		return withLeadingSlash.slice(0, -1)
+	}
+	return withLeadingSlash
+}
+
+function inferNamespaceFromPath(path, homeNamespace) {
+	if (path === '/') return homeNamespace
+	return path.slice(1)
 }
 
 class Router {
@@ -12,13 +80,18 @@ class Router {
 		containerSelector = '[data-router-view]',
 		linkSelector = 'a[href^="/"]',
 		routes = {},
-		transitions = [],
+		homeNamespace = 'home',
+		transitions,
 		onNavigationError = null,
 	} = {}) {
 		this.containerSelector = containerSelector
 		this.linkSelector = linkSelector
-		this.routes = routes
-		this.transitions = createTransitionRegistry(transitions)
+		this.routes = normalizeRoutes(routes, { homeNamespace })
+		const activeTransitions =
+			Array.isArray(transitions) && transitions.length > 0
+				? transitions
+				: [defaultFadeTransition]
+		this.transitions = createTransitionRegistry(activeTransitions)
 		this.onNavigationError = onNavigationError
 
 		this.pageLoader = new PageLoader({ containerSelector })
