@@ -54,46 +54,4 @@ const transitions = [
 // 	},
 // })
 
-// router.start()
-
-const router = createRouter({
-	routes: {
-		'/': {
-			namespace: 'home',
-		},
-		'/about': {
-			namespace: 'about',
-		},
-		'/work': {
-			namespace: 'work',
-		},
-		'/project': {
-			namespace: 'project',
-		},
-		'/contact': {
-			namespace: 'contact',
-		},
-	},
-	transitions: [
-		{
-			name: 'home-about',
-			from: 'home',
-			to: 'about',
-			handler: fadeTransition,
-		},
-		{
-			name: 'work-project',
-			from: 'home',
-			to: 'contact',
-			handler: slideTransition,
-		},
-		{
-			name: 'default',
-			from: '*',
-			to: '*',
-			handler: fadeTransition,
-		},
-	],
-})
-
 router.start()

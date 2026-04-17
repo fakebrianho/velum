@@ -70,9 +70,6 @@ const router = createRouter({
 		'/project': {
 			namespace: 'project',
 		},
-		'/contact': {
-			namespace: 'contact',
-		},
 	},
 	transitions: [
 		{
@@ -84,7 +81,7 @@ const router = createRouter({
 		{
 			name: 'work-project',
 			from: 'home',
-			to: 'contact',
+			to: 'project',
 			handler: slideTransition,
 		},
 		{

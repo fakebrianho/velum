@@ -120,19 +120,7 @@ body {
 	border-radius: 16px;
 	margin-bottom: 40px;
 }
-.hero-image2 {
-	width: 100%;
-	height: 400px;
-	background: linear-gradient(
-		135deg,
-		#a81f1f 0%,
-		#7b3fe4 40%,
-		#e0608a 75%,
-		#f5a623 100%
-	);
-	border-radius: 16px;
-	margin-bottom: 40px;
-}
+
 
 /* About — detail block */
 .detail {

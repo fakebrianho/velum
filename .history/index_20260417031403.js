@@ -24,4 +24,5 @@ export * from './src/transitions/fade.js'
 export * from './src/transitions/homeToAbout.js'
 export * from './src/transitions/aboutToWork.js'
 export * from './src/transitions/fadeTransition.js'
-export * from './src/transitions/slide.js'
+export * from './src/transitions/'
+

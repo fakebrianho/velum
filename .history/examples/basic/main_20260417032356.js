@@ -70,9 +70,6 @@ const router = createRouter({
 		'/project': {
 			namespace: 'project',
 		},
-		'/contact': {
-			namespace: 'contact',
-		},
 	},
 	transitions: [
 		{

@@ -15,7 +15,12 @@ export default {
 	capitalize,
 	formatCurrency,
 }
+export * from './src/utils/index.js'
 export * from './src/router.js'
 export * from './src/pageLoader.js'
 export * from './src/transition.js'
+export * from './src/transitionRegistry.js'
 export * from './src/transitions/fade.js'
+export * from './src/transitions/homeToAbout.js'
+export * from './src/transitions/aboutToWork.js'
+export * from './src/transition/fadeTransition'
