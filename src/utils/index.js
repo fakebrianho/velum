@@ -1,2 +1,2 @@
 export * from './dom.js'
-export * from './transition.js'
+export * from './transitionUtil.js'

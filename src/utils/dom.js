@@ -34,16 +34,44 @@ export function cloneFixed(el, rect) {
 }
 
 /**
+ * Index all elements in a container that carry a shared data attribute
+ * (default: data-hero-key) into a Map keyed by that attribute's value.
+ *
+ * Pre-computing this once — e.g. when a page is first fetched — means
+ * subsequent findPairs calls skip the querySelectorAll entirely.
+ *
+ *   const index = buildIndex(toContainer)
+ *   // later, at transition time:
+ *   const pairs = findPairs(fromContainer, index)
+ */
+export function buildIndex(container, attr = 'data-hero-key') {
+	const index = new Map()
+	container.querySelectorAll(`[${attr}]`).forEach((el) => {
+		index.set(el.getAttribute(attr), el)
+	})
+	return index
+}
+
+/**
  * Find all elements in fromContainer that have a matching counterpart in
  * toContainer by a shared data attribute (default: data-hero-key).
  *
+ * `toContainerOrIndex` can be either:
+ *   - An HTMLElement  — index is built on the fly (convenient, one-shot use)
+ *   - A Map           — pre-built via buildIndex() (zero querySelector overhead)
+ *
  * Returns an array of { key, fromEl, toEl } pairs.
  */
-export function findPairs(fromContainer, toContainer, attr = 'data-hero-key') {
+export function findPairs(fromContainer, toContainerOrIndex, attr = 'data-hero-key') {
+	const toIndex =
+		toContainerOrIndex instanceof Map
+			? toContainerOrIndex
+			: buildIndex(toContainerOrIndex, attr)
+
 	const pairs = []
 	fromContainer.querySelectorAll(`[${attr}]`).forEach((fromEl) => {
 		const key = fromEl.getAttribute(attr)
-		const toEl = toContainer.querySelector(`[${attr}="${key}"]`)
+		const toEl = toIndex.get(key)
 		if (toEl) pairs.push({ key, fromEl, toEl })
 	})
 	return pairs

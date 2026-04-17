@@ -170,6 +170,7 @@ body {
 	border-color: #444;
 }
 .page2 {
-	width: 95vw;
-	margin: auto;
+	width: 100%;
+	/* border: 2px solid red; */
+	/* margin: auto; */
 }

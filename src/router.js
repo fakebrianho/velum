@@ -44,6 +44,13 @@ class Router {
 
 		document.addEventListener('click', this._onLinkClick)
 		window.addEventListener('popstate', this._onPopState)
+
+		// Prefetch and index all known routes in the background so that
+		// transitions pay zero fetch/querySelector cost once preload finishes.
+		const routeUrls = Object.keys(this.routes)
+		if (routeUrls.length) {
+			this.pageLoader.preloadAll(routeUrls)
+		}
 	}
 
 	destroy() {
@@ -233,6 +240,7 @@ class Router {
 			const context = {
 				from: fromContainer,
 				to: stagedContainer,
+				heroIndex: page.heroIndex,
 				fromRoute,
 				toRoute,
 				fromNamespace,
