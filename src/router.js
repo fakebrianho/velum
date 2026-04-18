@@ -87,10 +87,8 @@ class Router {
 		this.containerSelector = containerSelector
 		this.linkSelector = linkSelector
 		this.routes = normalizeRoutes(routes, { homeNamespace })
-		const activeTransitions =
-			Array.isArray(transitions) && transitions.length > 0
-				? transitions
-				: [defaultFadeTransition]
+		const customTransitions = Array.isArray(transitions) ? transitions : []
+		const activeTransitions = [...customTransitions, defaultFadeTransition]
 		this.transitions = createTransitionRegistry(activeTransitions)
 		this.onNavigationError = onNavigationError
 

@@ -12,12 +12,12 @@ import { heroTransition } from '../../src/transitions/heroTransition.js'
 const router = createRouter({
 	routes: ['/', '/about', '/work', '/project', '/contact'],
 	transitions: [
-		{
-			name: 'home-about',
-			from: 'home',
-			to: 'about',
-			handler: fadeTransition,
-		},
+		// {
+		// 	name: 'home-about',
+		// 	from: 'home',
+		// 	to: 'about',
+		// 	handler: fadeTransition,
+		// },
 		{
 			name: 'work-project',
 			from: 'home',
@@ -30,12 +30,12 @@ const router = createRouter({
 			to: 'contact',
 			handler: heroTransition,
 		},
-		{
-			name: 'default',
-			from: '*',
-			to: '*',
-			handler: fadeTransition,
-		},
+		// {
+		// 	name: 'default',
+		// 	from: '*',
+		// 	to: '*',
+		// 	handler: fadeTransition,
+		// },
 	],
 })
 
