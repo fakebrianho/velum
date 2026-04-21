@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Three Hero | About</title>
+	<link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+	<nav class="nav">
+		<a href="/" class="nav__link">Home</a>
+		<a href="/about" class="nav__link">About</a>
+		<a href="/contact" class="nav__link">Contact</a>
+	</nav>
+
+	<main data-router-view data-namespace="about" class="page">
+		<img
+			class="hero-image"
+			data-hero-key="about-hero"
+			src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1800&q=80"
+			alt="Aurora campaign hero"
+		/>
+
+		<div class="detail">
+			<p class="detail__label">Branding · Visual Identity · 2024</p>
+			<h1 class="title">Aurora Campaign</h1>
+			<p class="subtitle">
+				A full-scale brand identity built around layered gradients and motion. This
+				page receives the 3D hero plane from the home card before revealing this image.
+			</p>
+			<a href="/" class="cta">Back to home</a>
+		</div>
+	</main>
+
+	<script type="module" src="/main.js"></script>
+</body>
+
+</html>

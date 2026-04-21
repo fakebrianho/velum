@@ -1,16 +1,15 @@
 import { createTransition, tweenRect } from '../utils/transitionUtil.js'
-import { findPairs, measurePair, cloneFixed, getRadius } from '../utils/index.js'
+import {
+	findPairs,
+	measurePair,
+	cloneFixed,
+	getRadius,
+} from '../utils/index.js'
 
 export const heroTransition = createTransition(
 	({ from, to, tl, heroIndex }) => {
 		// 1. Find all matched elements between the two pages
 		const pairs = findPairs(from, heroIndex)
-		console.log('heroIndex size:', heroIndex?.size)
-		console.log(
-			'from hero els:',
-			from.querySelectorAll('[data-hero-key]').length,
-		)
-		console.log('pairs:', pairs)
 
 		// 2. For each pair: measure true positions, clone, and fly
 		for (const { fromEl, toEl } of pairs) {

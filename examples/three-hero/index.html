@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Three Hero | Home</title>
+	<link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+	<nav class="nav">
+		<a href="/" class="nav__link">Home</a>
+		<a href="/about" class="nav__link">About</a>
+		<a href="/contact" class="nav__link">Contact</a>
+	</nav>
+
+	<main data-router-view data-namespace="home" class="page">
+		<div class="intro">
+			<h1 class="title">Three.js Hero Demo</h1>
+			<p class="subtitle">Click either card to trigger a perspective-camera 3D hero transition.</p>
+		</div>
+
+		<a href="/about" class="card">
+			<img class="card__image" data-hero-key="about-hero" data-webgl
+				src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1400&q=80"
+				alt="Aurora campaign card" />
+			<div class="card__body">
+				<h2 class="card__title">Aurora Campaign</h2>
+				<p class="card__meta">Home -> About (3D hero)</p>
+			</div>
+		</a>
+
+		<a href="/contact" class="card">
+			<img class="card__image" data-hero-key="contact-hero" data-webgl
+				src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1400&q=80"
+				alt="Contact card" />
+			<div class="card__body">
+				<h2 class="card__title">Contact Profile</h2>
+				<p class="card__meta">Home -> Contact (3D hero)</p>
+			</div>
+		</a>
+	</main>
+
+	<script type="module" src="/main.js"></script>
+</body>
+
+</html>
