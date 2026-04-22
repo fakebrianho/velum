@@ -3,6 +3,7 @@ import {
 	createRouter,
 	createThreeHeroTransition,
 	defaultFadeTransition,
+	createDefault3DFade,
 } from '../../index.js'
 import {
 	syncingPixel,
@@ -11,9 +12,9 @@ import {
 	setImageSaturation,
 	syncPlanesToDom,
 } from '../../index.js'
+
 import Lenis from 'lenis'
 import 'lenis/dist/lenis.css'
-import { heroTransition } from '../../src/transitions/heroTransition.js'
 
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true })
 
@@ -44,7 +45,10 @@ const hero3dTransition = createThreeHeroTransition({
 	planeMap,
 	activeTransitionKeys,
 })
-
+const fade3DTransition = createDefault3DFade({
+	planeMap,
+	activeTransitionKeys,
+})
 init()
 function init() {
 	renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
@@ -53,7 +57,7 @@ function init() {
 	camera.position.z = perspective
 
 	syncingPixel(perspective, camera)
-	loadImages(scene, renderer, planes, planeMap)
+	loadImages(scene, renderer, camera, planes, planeMap)
 	setImageExposure(1.0)
 	setImageSaturation(1.4)
 	window.setImageExposure = setImageExposure
@@ -66,12 +70,12 @@ function resize() {
 		renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 		renderer.setSize(window.innerWidth, window.innerHeight)
 		camera.aspect = window.innerWidth / window.innerHeight
-		camera.updateProjectionMatrix()
+		syncingPixel(perspective, camera)
 	})
 }
 function animate(time) {
 	lenis.raf(time)
-	syncPlanesToDom(planes, activeTransitionKeys)
+	syncPlanesToDom(planes, camera, renderer, activeTransitionKeys)
 	renderer.render(scene, camera)
 	requestAnimationFrame(animate)
 }
@@ -102,7 +106,7 @@ const router = createRouter({
 			to: 'home',
 			handler: hero3dTransition,
 		},
-		defaultFadeTransition,
+		fade3DTransition,
 	],
 })
 

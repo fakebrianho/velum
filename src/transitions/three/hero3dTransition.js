@@ -1,6 +1,7 @@
 import gsap from 'gsap'
 import * as THREE from 'three'
 import { findPairs, measurePair, cloneFixed } from '../../utils/index.js'
+import { rectToWorldState } from '../../utils/three-utils.js'
 
 /**
  * Create a 3D hero transition that maps matching DOM images to Three.js planes.
@@ -58,16 +59,30 @@ export function createThreeHeroTransition(options) {
 		)
 	}
 
+	let killActive = null
+
 	return {
 		async run({ from, to, heroIndex }) {
+			killActive?.()
+
 			const tl = gsap.timeline()
+			let settle
+			const settled = new Promise((r) => {
+				settle = r
+			})
+			tl.then(settle)
+			killActive = () => {
+				tl.kill()
+				settle()
+			}
 
 			if (!from) {
 				if (fadePages) {
 					tl.set(to, { opacity: 0 })
 					tl.to(to, { opacity: 1, duration: 0.35, ease }, 0)
 				}
-				await tl
+				await settled
+				killActive = null
 				return
 			}
 
@@ -81,16 +96,17 @@ export function createThreeHeroTransition(options) {
 				tl.add(() => {
 					reconcilePlanesToIncomingPage({ planeMap, heroIndex })
 				})
-				await tl
+				await settled
+				killActive = null
 				return
 			}
 			const { key: activeKey, fromEl, toEl } = pairs[0]
-			fromEl.style.visibility = 'hidden'
-			toEl.style.visibility = 'hidden'
 			const otherReturningMeshes = [...planeMap.entries()]
 				.filter(
 					([key]) =>
-						key !== activeKey && heroIndex instanceof Map && heroIndex.has(key),
+						key !== activeKey &&
+						heroIndex instanceof Map &&
+						heroIndex.has(key),
 				)
 				.map(([key, mesh]) => ({
 					key,
@@ -98,7 +114,9 @@ export function createThreeHeroTransition(options) {
 					nextEl: heroIndex.get(key),
 					uniform: mesh?.material?.uniforms?.uAlpha,
 				}))
-				.filter((entry) => Boolean(entry.mesh && entry.uniform && entry.nextEl))
+				.filter((entry) =>
+					Boolean(entry.mesh && entry.uniform && entry.nextEl),
+				)
 			const otherReturningAlphaUniforms = otherReturningMeshes.map(
 				(entry) => entry.uniform,
 			)
@@ -122,93 +140,99 @@ export function createThreeHeroTransition(options) {
 					0,
 				)
 			}
-			const { width, height, top, left } = toEl.getBoundingClientRect()
+			const canvasRect = renderer.domElement.getBoundingClientRect()
+			const target = rectToWorldState({ rect: toEl.getBoundingClientRect(), canvasRect, camera, planeZ })
 			activeTransitionKeys.add(activeKey)
-			const mesh = planeMap.get(activeKey)
-			if (!mesh) {
-				tl.add(() => {
-					reconcilePlanesToIncomingPage({ planeMap, heroIndex })
-					activeTransitionKeys.delete(activeKey)
+			try {
+				const mesh = planeMap.get(activeKey)
+				if (!mesh) {
+					tl.add(() => reconcilePlanesToIncomingPage({ planeMap, heroIndex }))
+					await settled
+					return
+				}
+				mesh.visible = true
+				if (mesh.material?.uniforms?.uAlpha) {
+					mesh.material.uniforms.uAlpha.value = 1
+				}
+				otherReturningMeshes.forEach(({ mesh: returningMesh, nextEl }) => {
+					returningMesh.userData.img = nextEl
+					returningMesh.visible = true
 				})
-				await tl
-				return
-			}
-			mesh.visible = true
-			if (mesh.material?.uniforms?.uAlpha) {
-				mesh.material.uniforms.uAlpha.value = 1
-			}
-			otherReturningMeshes.forEach(({ mesh: returningMesh, nextEl }) => {
-				returningMesh.userData.img = nextEl
-				returningMesh.visible = true
-			})
-			tl.to(
-				mesh.position,
-				{
-					x: left - window.innerWidth / 2 + width / 2,
-					y: -top + window.innerHeight / 2 - height / 2,
-					duration,
-				},
-				0,
-			)
-			tl.to(
-				mesh.scale,
-				{
-					x: width,
-					y: height,
-					duration,
-				},
-				0,
-			)
-
-			if (fadePages) {
 				tl.to(
-					from,
+					mesh.position,
 					{
-						opacity: 0,
-						duration: Math.min(duration * 0.55, 0.35),
-						ease,
+						x: target.x,
+						y: target.y,
+						duration,
 					},
 					0,
 				)
 				tl.to(
-					to,
+					mesh.scale,
 					{
-						opacity: 1,
-						duration: Math.min(duration * 0.55, 0.35),
-						ease,
+						x: target.width,
+						y: target.height,
+						duration,
 					},
-					duration * 0.35,
+					0,
 				)
-			}
-			if (otherReturningAlphaUniforms.length) {
-				tl.to(
-					otherReturningAlphaUniforms,
-					{
-						value: 1,
-						duration: Math.min(duration * 0.45, 0.3),
-						ease,
-					},
-					duration * 0.55,
-				)
-			}
 
-			tl.add(() => {
-				mesh.userData.img = toEl
-				toEl.style.visibility = ''
-				fromEl.style.visibility = ''
-				activeTransitionKeys.delete(activeKey)
-				reconcilePlanesToIncomingPage({
-					planeMap,
-					heroIndex,
-					resetAlpha: false,
+				if (fadePages) {
+					tl.to(
+						from,
+						{
+							opacity: 0,
+							duration: Math.min(duration * 0.55, 0.35),
+							ease,
+						},
+						0,
+					)
+					tl.to(
+						to,
+						{
+							opacity: 1,
+							duration: Math.min(duration * 0.55, 0.35),
+							ease,
+						},
+						duration * 0.35,
+					)
+				}
+				if (otherReturningAlphaUniforms.length) {
+					tl.to(
+						otherReturningAlphaUniforms,
+						{
+							value: 1,
+							duration: Math.min(duration * 0.45, 0.3),
+							ease,
+						},
+						duration * 0.55,
+					)
+				}
+
+				tl.add(() => {
+					mesh.userData.img = toEl
+					toEl.style.visibility = ''
+					fromEl.style.visibility = ''
+					reconcilePlanesToIncomingPage({
+						planeMap,
+						heroIndex,
+						resetAlpha: false,
+					})
 				})
-			})
-			await tl
+				await settled
+			} finally {
+				killActive = null
+				activeTransitionKeys.delete(activeKey)
+			}
 		},
 	}
 }
 
-function reconcilePlanesToIncomingPage({ planeMap, heroIndex, resetAlpha = true }) {
+function reconcilePlanesToIncomingPage({
+	planeMap,
+	heroIndex,
+	resetAlpha = true,
+}) {
 	if (!(heroIndex instanceof Map)) return
 
 	for (const [key, mesh] of planeMap.entries()) {
@@ -226,30 +250,6 @@ function reconcilePlanesToIncomingPage({ planeMap, heroIndex, resetAlpha = true 
 	}
 }
 
-function rectToWorldState({ rect, canvasRect, camera, planeZ }) {
-	const centerX = rect.left - canvasRect.left + rect.width / 2
-	const centerY = rect.top - canvasRect.top + rect.height / 2
-
-	const distance = Math.abs(camera.position.z - planeZ)
-	const vFov = (camera.fov * Math.PI) / 180
-	const worldHeight = 2 * Math.tan(vFov / 2) * distance
-	const worldWidth = worldHeight * camera.aspect
-
-	const unitsPerPixelX = worldWidth / canvasRect.width
-	const unitsPerPixelY = worldHeight / canvasRect.height
-
-	return {
-		x: (centerX - canvasRect.width / 2) * unitsPerPixelX,
-		y: -(centerY - canvasRect.height / 2) * unitsPerPixelY,
-		width: rect.width * unitsPerPixelX,
-		height: rect.height * unitsPerPixelY,
-	}
-}
-
-function applyPlaneState(mesh, state) {
-	mesh.position.set(state.x, state.y, mesh.position.z)
-	mesh.scale.set(state.width, state.height, 1)
-}
 
 async function createTextureFromElement(el) {
 	const src = resolveImageSource(el)

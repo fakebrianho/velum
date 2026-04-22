@@ -4,6 +4,26 @@ import vertexShader from '../../shaders/vertex.glsl?raw'
 import fragmentShader from '../../shaders/fragment.glsl?raw'
 const imageMaterials = []
 
+export function rectToWorldState({ rect, canvasRect, camera, planeZ = 0 }) {
+	const centerX = rect.left - canvasRect.left + rect.width / 2
+	const centerY = rect.top - canvasRect.top + rect.height / 2
+
+	const distance = Math.abs(camera.position.z - planeZ)
+	const vFov = (camera.fov * Math.PI) / 180
+	const worldHeight = 2 * Math.tan(vFov / 2) * distance
+	const worldWidth = worldHeight * camera.aspect
+
+	const unitsPerPixelX = worldWidth / canvasRect.width
+	const unitsPerPixelY = worldHeight / canvasRect.height
+
+	return {
+		x: (centerX - canvasRect.width / 2) * unitsPerPixelX,
+		y: -(centerY - canvasRect.height / 2) * unitsPerPixelY,
+		width: rect.width * unitsPerPixelX,
+		height: rect.height * unitsPerPixelY,
+	}
+}
+
 export const setImageExposure = (value = 1) => {
 	const exposure = Math.max(0, Number(value) || 0)
 	imageMaterials.forEach((mat) => {
@@ -48,23 +68,18 @@ const getContentBoxSize = (img) => {
 	}
 }
 
-export const loadImages = (scene, renderer, planes, planeMap) => {
+export const loadImages = (scene, renderer, camera, planes, planeMap, planeZ = 0) => {
 	imageMaterials.length = 0
-
+	const canvasRect = renderer.domElement.getBoundingClientRect()
 	document.querySelectorAll('img[data-webgl]').forEach((img) => {
-		console.log('sdfa', img.dataset)
 		const loader = new TextureLoader()
-		const tex = loader.load(img.src)
-		// const sz = getContentBoxSize(img)
-		const sz = img.getBoundingClientRect()
-		tex.colorSpace = THREE.SRGBColorSpace // important, or colors look washed out
+		const tex = loader.load(img.currentSrc || img.src)
+		tex.colorSpace = THREE.SRGBColorSpace
 		tex.anisotropy = renderer.capabilities.getMaxAnisotropy()
-		const geo = new THREE.PlaneGeometry(1, 1, 32, 32)
+		const geo = new THREE.PlaneGeometry(1, 1, 1, 1)
 		const mat = new THREE.ShaderMaterial({
 			uniforms: {
 				uTexture: { value: tex },
-				uHover: { value: 0 },
-				uTime: { value: 0 },
 				uExposure: { value: 0.95 },
 				uSaturation: { value: 1.0 },
 				uAlpha: { value: 1.0 },
@@ -76,17 +91,20 @@ export const loadImages = (scene, renderer, planes, planeMap) => {
 		})
 		imageMaterials.push(mat)
 		const mesh = new THREE.Mesh(geo, mat)
-		mesh.position.x = sz.left - window.innerWidth / 2 + sz.width / 2
-		mesh.position.y = -sz.top + window.innerHeight / 2 - sz.height / 2
+		const state = rectToWorldState({ rect: img.getBoundingClientRect(), canvasRect, camera, planeZ })
+		mesh.position.set(state.x, state.y, planeZ)
+		mesh.scale.set(state.width, state.height, 1)
 		mesh.userData.img = img
 		const key = img.dataset.heroKey
 		if (key) planeMap.set(key, mesh)
-		mesh.userData.key = img.dataset.heroKey
+		mesh.userData.key = key
 		scene.add(mesh)
 		planes.push(mesh)
 	})
 }
-export function syncPlanesToDom(planes, activeTransitionKeys = new Set()) {
+
+export function syncPlanesToDom(planes, camera, renderer, activeTransitionKeys = new Set(), planeZ = 0) {
+	const canvasRect = renderer.domElement.getBoundingClientRect()
 	planes.forEach((plane) => {
 		const key = plane.userData.key
 		if (key && activeTransitionKeys.has(key)) return
@@ -94,9 +112,9 @@ export function syncPlanesToDom(planes, activeTransitionKeys = new Set()) {
 		const img = plane.userData.img
 		if (!img) return
 
-		const { width, height, top, left } = img.getBoundingClientRect()
-		plane.scale.set(width, height, 1)
-		plane.position.x = left - window.innerWidth / 2 + width / 2
-		plane.position.y = -top + window.innerHeight / 2 - height / 2
+		const state = rectToWorldState({ rect: img.getBoundingClientRect(), canvasRect, camera, planeZ })
+		plane.scale.set(state.width, state.height, 1)
+		plane.position.x = state.x
+		plane.position.y = state.y
 	})
 }
