@@ -2,6 +2,9 @@ import gsap from 'gsap'
 import * as THREE from 'three'
 import { findPairs, measurePair, cloneFixed } from '../../utils/index.js'
 import { rectToWorldState } from '../../utils/three-utils.js'
+import flagVertexShader from '../../../shaders/flag-vertex.glsl?raw'
+import flagFragmentShader from '../../../shaders/flag-fragment.glsl?raw'
+import fragmentShader from '../../../shaders/fragment.glsl?raw'
 
 /**
  * Create a 3D hero transition that maps matching DOM images to Three.js planes.
@@ -37,6 +40,8 @@ export function createThreeHeroTransition(options) {
 		heroAttr = 'data-hero-key',
 		planeMap,
 		activeTransitionKeys = new Set(),
+		waveEffect = false,
+		waveSegments = 32,
 		createTexture = createTextureFromElement,
 		render = ({
 			renderer: activeRenderer,
@@ -141,12 +146,20 @@ export function createThreeHeroTransition(options) {
 				)
 			}
 			const canvasRect = renderer.domElement.getBoundingClientRect()
-			const target = rectToWorldState({ rect: toEl.getBoundingClientRect(), canvasRect, camera, planeZ })
+			const target = rectToWorldState({
+				rect: toEl.getBoundingClientRect(),
+				canvasRect,
+				camera,
+				planeZ,
+			})
 			activeTransitionKeys.add(activeKey)
+			let cleanupWave = null
 			try {
 				const mesh = planeMap.get(activeKey)
 				if (!mesh) {
-					tl.add(() => reconcilePlanesToIncomingPage({ planeMap, heroIndex }))
+					tl.add(() =>
+						reconcilePlanesToIncomingPage({ planeMap, heroIndex }),
+					)
 					await settled
 					return
 				}
@@ -154,10 +167,110 @@ export function createThreeHeroTransition(options) {
 				if (mesh.material?.uniforms?.uAlpha) {
 					mesh.material.uniforms.uAlpha.value = 1
 				}
-				otherReturningMeshes.forEach(({ mesh: returningMesh, nextEl }) => {
-					returningMesh.userData.img = nextEl
-					returningMesh.visible = true
-				})
+
+				if (waveEffect) {
+					const originalGeo = mesh.geometry
+					const originalMat = mesh.material
+					const flagGeo = new THREE.PlaneGeometry(
+						1,
+						1,
+						waveSegments,
+						waveSegments,
+					)
+					const flagMat = new THREE.ShaderMaterial({
+						uniforms: {
+							uTexture: {
+								value: originalMat.uniforms.uTexture.value,
+							},
+							uExposure: {
+								value: originalMat.uniforms.uExposure.value,
+							},
+							uSaturation: {
+								value: originalMat.uniforms.uSaturation.value,
+							},
+							uNoiseFreq: {
+								value: 0,
+							},
+							uNoiseAmp: {
+								value: 0,
+							},
+							uAlpha: { value: 1.0 },
+							uProgress: { value: 0 },
+							uTime: { value: 0 },
+						},
+						transparent: true,
+						// wireframe: true,
+						vertexShader: flagVertexShader,
+						fragmentShader: flagFragmentShader,
+						toneMapped: false,
+					})
+					flagMat.depthTest = false
+					mesh.geometry = flagGeo
+					mesh.material = flagMat
+					mesh.renderOrder = 1
+					tl.to(
+						flagMat.uniforms.uProgress,
+						{ value: 1, duration, ease },
+						0,
+					)
+					tl.to(
+						flagMat.uniforms.uNoiseFreq,
+						{
+							value: 2.5,
+							duration: duration / 3,
+							// ease,
+						},
+						0,
+					)
+					tl.to(
+						flagMat.uniforms.uNoiseAmp,
+						{
+							value: 0.45,
+							duration: duration / 3,
+							// ease,
+						},
+						0,
+					)
+					tl.to(
+						flagMat.uniforms.uNoiseFreq,
+						{
+							value: 0,
+							duration: duration / 2,
+							ease,
+						},
+						duration / 2,
+					)
+					tl.to(
+						flagMat.uniforms.uNoiseAmp,
+						{
+							value: 0,
+							duration: duration / 2,
+							ease,
+						},
+						duration / 2,
+					)
+					const tickId = gsap.ticker.add((time) => {
+						flagMat.uniforms.uTime.value = time
+					})
+					let cleaned = false
+					cleanupWave = () => {
+						if (cleaned) return
+						cleaned = true
+						gsap.ticker.remove(tickId)
+						mesh.renderOrder = 0
+						mesh.geometry = originalGeo
+						mesh.material = originalMat
+						flagGeo.dispose()
+						flagMat.dispose()
+					}
+				}
+
+				otherReturningMeshes.forEach(
+					({ mesh: returningMesh, nextEl }) => {
+						returningMesh.userData.img = nextEl
+						returningMesh.visible = true
+					},
+				)
 				tl.to(
 					mesh.position,
 					{
@@ -221,8 +334,11 @@ export function createThreeHeroTransition(options) {
 				})
 				await settled
 			} finally {
+				const pendingCleanup = cleanupWave
+				cleanupWave = null
 				killActive = null
 				activeTransitionKeys.delete(activeKey)
+				if (pendingCleanup) requestAnimationFrame(pendingCleanup)
 			}
 		},
 	}
@@ -249,7 +365,6 @@ function reconcilePlanesToIncomingPage({
 		}
 	}
 }
-
 
 async function createTextureFromElement(el) {
 	const src = resolveImageSource(el)

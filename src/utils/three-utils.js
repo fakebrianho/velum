@@ -58,29 +58,14 @@ export const syncingPixel = (perspective, camera) => {
 	camera.updateProjectionMatrix()
 }
 
-const getContentBoxSize = (img) => {
-	const rect = img.getBoundingClientRect()
-	const styles = window.getComputedStyle(img)
-	const paddingX =
-		parseFloat(styles.paddingLeft || 0) +
-		parseFloat(styles.paddingRight || 0)
-	const paddingY =
-		parseFloat(styles.paddingTop || 0) +
-		parseFloat(styles.paddingBottom || 0)
-	const borderX =
-		parseFloat(styles.borderLeftWidth || 0) +
-		parseFloat(styles.borderRightWidth || 0)
-	const borderY =
-		parseFloat(styles.borderTopWidth || 0) +
-		parseFloat(styles.borderBottomWidth || 0)
-
-	return {
-		width: Math.max(1, rect.width - paddingX - borderX),
-		height: Math.max(1, rect.height - paddingY - borderY),
-	}
-}
-
-export const loadImages = (scene, renderer, camera, planes, planeMap, planeZ = 0) => {
+export const loadImages = (
+	scene,
+	renderer,
+	camera,
+	planes,
+	planeMap,
+	planeZ = 0,
+) => {
 	hideWebGLImages()
 	imageMaterials.length = 0
 	const canvasRect = renderer.domElement.getBoundingClientRect()
@@ -104,7 +89,12 @@ export const loadImages = (scene, renderer, camera, planes, planeMap, planeZ = 0
 		})
 		imageMaterials.push(mat)
 		const mesh = new THREE.Mesh(geo, mat)
-		const state = rectToWorldState({ rect: img.getBoundingClientRect(), canvasRect, camera, planeZ })
+		const state = rectToWorldState({
+			rect: img.getBoundingClientRect(),
+			canvasRect,
+			camera,
+			planeZ,
+		})
 		mesh.position.set(state.x, state.y, planeZ)
 		mesh.scale.set(state.width, state.height, 1)
 		mesh.userData.img = img
@@ -116,7 +106,13 @@ export const loadImages = (scene, renderer, camera, planes, planeMap, planeZ = 0
 	})
 }
 
-export function syncPlanesToDom(planes, camera, renderer, activeTransitionKeys = new Set(), planeZ = 0) {
+export function syncPlanesToDom(
+	planes,
+	camera,
+	renderer,
+	activeTransitionKeys = new Set(),
+	planeZ = 0,
+) {
 	const canvasRect = renderer.domElement.getBoundingClientRect()
 	planes.forEach((plane) => {
 		const key = plane.userData.key
@@ -125,7 +121,12 @@ export function syncPlanesToDom(planes, camera, renderer, activeTransitionKeys =
 		const img = plane.userData.img
 		if (!img) return
 
-		const state = rectToWorldState({ rect: img.getBoundingClientRect(), canvasRect, camera, planeZ })
+		const state = rectToWorldState({
+			rect: img.getBoundingClientRect(),
+			canvasRect,
+			camera,
+			planeZ,
+		})
 		plane.scale.set(state.width, state.height, 1)
 		plane.position.x = state.x
 		plane.position.y = state.y

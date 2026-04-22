@@ -16,16 +16,41 @@ const ctx = createThreeContext({
 	onTick: (time) => lenis.raf(time),
 })
 
-const hero3dTransition = createThreeHeroTransition({ ...ctx, duration: 0.75 })
+const hero3dTransition = createThreeHeroTransition({
+	...ctx,
+	duration: 1.75,
+	waveEffect: true,
+	// waveSegments:
+})
 const fade3DTransition = createDefault3DFade(ctx)
 
 const router = createRouter({
 	routes: ['/', '/about', '/contact'],
 	transitions: [
-		{ name: 'home-about-3d', from: 'home', to: 'about', handler: hero3dTransition },
-		{ name: 'home-contact-3d', from: 'home', to: 'contact', handler: hero3dTransition },
-		{ name: 'contact-home-3d', from: 'contact', to: 'home', handler: hero3dTransition },
-		{ name: 'about-home-3d', from: 'about', to: 'home', handler: hero3dTransition },
+		{
+			name: 'home-about-3d',
+			from: 'home',
+			to: 'about',
+			handler: hero3dTransition,
+		},
+		{
+			name: 'home-contact-3d',
+			from: 'home',
+			to: 'contact',
+			handler: hero3dTransition,
+		},
+		{
+			name: 'contact-home-3d',
+			from: 'contact',
+			to: 'home',
+			handler: hero3dTransition,
+		},
+		{
+			name: 'about-home-3d',
+			from: 'about',
+			to: 'home',
+			handler: hero3dTransition,
+		},
 		fade3DTransition,
 	],
 })
