@@ -13,6 +13,7 @@ import {
 } from '../../index.js'
 import Lenis from 'lenis'
 import 'lenis/dist/lenis.css'
+import { heroTransition } from '../../src/transitions/heroTransition.js'
 
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true })
 
@@ -29,15 +30,21 @@ const lenis = new Lenis({
 	smoothWheel: true,
 })
 
+const planes = []
+const perspective = 5
+const planeMap = new Map()
+const activeTransitionKeys = new Set()
+
 const hero3dTransition = createThreeHeroTransition({
 	scene,
 	camera,
 	renderer,
 	duration: 0.75,
 	planeZ: 0,
+	planeMap,
+	activeTransitionKeys,
 })
-const planes = []
-const perspective = 5
+
 init()
 function init() {
 	renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
@@ -46,7 +53,7 @@ function init() {
 	camera.position.z = perspective
 
 	syncingPixel(perspective, camera)
-	loadImages(scene, renderer, planes)
+	loadImages(scene, renderer, planes, planeMap)
 	setImageExposure(1.0)
 	setImageSaturation(1.4)
 	window.setImageExposure = setImageExposure
@@ -59,20 +66,12 @@ function resize() {
 		renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 		renderer.setSize(window.innerWidth, window.innerHeight)
 		camera.aspect = window.innerWidth / window.innerHeight
-
-		// planes.forEach((plane) => {
-		// 	const { width, height, top, left } =
-		// 		plane.userData.img.getBoundingClientRect()
-		// 	plane.scale.set(width, height, 1)
-		// 	plane.position.x = left - window.innerWidth / 2 + width / 2
-		// 	plane.position.y = -top + window.innerHeight / 2 - height / 2
-		// })
 		camera.updateProjectionMatrix()
 	})
 }
 function animate(time) {
 	lenis.raf(time)
-	syncPlanesToDom(planes)
+	syncPlanesToDom(planes, activeTransitionKeys)
 	renderer.render(scene, camera)
 	requestAnimationFrame(animate)
 }
@@ -89,6 +88,18 @@ const router = createRouter({
 			name: 'home-contact-3d',
 			from: 'home',
 			to: 'contact',
+			handler: hero3dTransition,
+		},
+		{
+			name: 'contact-home-3d',
+			from: 'contact',
+			to: 'home',
+			handler: hero3dTransition,
+		},
+		{
+			name: 'about-home-3d',
+			from: 'about',
+			to: 'home',
 			handler: hero3dTransition,
 		},
 		defaultFadeTransition,

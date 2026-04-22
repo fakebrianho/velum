@@ -48,10 +48,11 @@ const getContentBoxSize = (img) => {
 	}
 }
 
-export const loadImages = (scene, renderer, planes) => {
+export const loadImages = (scene, renderer, planes, planeMap) => {
 	imageMaterials.length = 0
 
 	document.querySelectorAll('img[data-webgl]').forEach((img) => {
+		console.log('sdfa', img.dataset)
 		const loader = new TextureLoader()
 		const tex = loader.load(img.src)
 		// const sz = getContentBoxSize(img)
@@ -66,7 +67,9 @@ export const loadImages = (scene, renderer, planes) => {
 				uTime: { value: 0 },
 				uExposure: { value: 0.95 },
 				uSaturation: { value: 1.0 },
+				uAlpha: { value: 1.0 },
 			},
+			transparent: true,
 			vertexShader,
 			fragmentShader,
 			toneMapped: false,
@@ -76,14 +79,21 @@ export const loadImages = (scene, renderer, planes) => {
 		mesh.position.x = sz.left - window.innerWidth / 2 + sz.width / 2
 		mesh.position.y = -sz.top + window.innerHeight / 2 - sz.height / 2
 		mesh.userData.img = img
+		const key = img.dataset.heroKey
+		if (key) planeMap.set(key, mesh)
+		mesh.userData.key = img.dataset.heroKey
 		scene.add(mesh)
 		planes.push(mesh)
 	})
 }
-export function syncPlanesToDom(planes) {
+export function syncPlanesToDom(planes, activeTransitionKeys = new Set()) {
 	planes.forEach((plane) => {
+		const key = plane.userData.key
+		if (key && activeTransitionKeys.has(key)) return
+
 		const img = plane.userData.img
 		if (!img) return
+
 		const { width, height, top, left } = img.getBoundingClientRect()
 		plane.scale.set(width, height, 1)
 		plane.position.x = left - window.innerWidth / 2 + width / 2

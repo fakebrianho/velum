@@ -1,6 +1,6 @@
 import gsap from 'gsap'
 import * as THREE from 'three'
-import { findPairs, measurePair } from '../../utils/index.js'
+import { findPairs, measurePair, cloneFixed } from '../../utils/index.js'
 
 /**
  * Create a 3D hero transition that maps matching DOM images to Three.js planes.
@@ -34,6 +34,8 @@ export function createThreeHeroTransition(options) {
 		planeZ = 0,
 		fadePages = true,
 		heroAttr = 'data-hero-key',
+		planeMap,
+		activeTransitionKeys = new Set(),
 		createTexture = createTextureFromElement,
 		render = ({
 			renderer: activeRenderer,
@@ -70,76 +72,93 @@ export function createThreeHeroTransition(options) {
 			}
 
 			const pairs = findPairs(from, heroIndex || to, heroAttr)
+
 			if (!pairs.length) {
 				if (fadePages) {
 					tl.to(from, { opacity: 0, duration: 0.3, ease }, 0)
 					tl.to(to, { opacity: 1, duration: 0.3, ease }, 0.1)
 				}
+				tl.add(() => {
+					reconcilePlanesToIncomingPage({ planeMap, heroIndex })
+				})
 				await tl
 				return
 			}
-			console.log('running at least')
-			const meshes = []
-			const hiddenElements = []
-			const canvasRect = renderer.domElement.getBoundingClientRect()
-
-			for (const pair of pairs) {
-				console.log('airs', pair)
-				const { fromEl, toEl } = pair
-				const { fromRect, toRect } = measurePair(fromEl, toEl, from, to)
-				const texture = await createTexture(fromEl, pair)
-				console.log('asdf', texture)
-				if (!texture) continue
-
-				const material = new THREE.MeshBasicMaterial({
-					map: texture,
-					transparent: true,
-					toneMapped: false,
-				})
-				const mesh = new THREE.Mesh(
-					new THREE.PlaneGeometry(1, 1),
-					material,
+			const { key: activeKey, fromEl, toEl } = pairs[0]
+			fromEl.style.visibility = 'hidden'
+			toEl.style.visibility = 'hidden'
+			const otherReturningMeshes = [...planeMap.entries()]
+				.filter(
+					([key]) =>
+						key !== activeKey && heroIndex instanceof Map && heroIndex.has(key),
 				)
-				scene.add(mesh)
-				meshes.push(mesh)
+				.map(([key, mesh]) => ({
+					key,
+					mesh,
+					nextEl: heroIndex.get(key),
+					uniform: mesh?.material?.uniforms?.uAlpha,
+				}))
+				.filter((entry) => Boolean(entry.mesh && entry.uniform && entry.nextEl))
+			const otherReturningAlphaUniforms = otherReturningMeshes.map(
+				(entry) => entry.uniform,
+			)
+			const returningKeySet = new Set(
+				otherReturningMeshes.map((entry) => entry.key),
+			)
+			const otherFadingOutUniforms = [...planeMap.entries()]
+				.filter(
+					([key]) => key !== activeKey && !returningKeySet.has(key),
+				)
+				.map(([, mesh]) => mesh?.material?.uniforms?.uAlpha)
+				.filter(Boolean)
 
-				fromEl.style.visibility = 'hidden'
-				toEl.style.visibility = 'hidden'
-				hiddenElements.push(fromEl, toEl)
-
-				const fromState = rectToWorldState({
-					rect: fromRect,
-					canvasRect,
-					camera,
-					planeZ,
-				})
-				const toState = rectToWorldState({
-					rect: toRect,
-					canvasRect,
-					camera,
-					planeZ,
-				})
-
-				applyPlaneState(mesh, fromState)
-
-				const tweenState = { ...fromState }
+			if (otherFadingOutUniforms.length) {
 				tl.to(
-					tweenState,
+					otherFadingOutUniforms,
 					{
-						x: toState.x,
-						y: toState.y,
-						width: toState.width,
-						height: toState.height,
+						value: 0,
 						duration,
-						ease,
-						onUpdate: () => {
-							applyPlaneState(mesh, tweenState)
-							render({ renderer, scene, camera })
-						},
 					},
 					0,
 				)
 			}
+			const { width, height, top, left } = toEl.getBoundingClientRect()
+			activeTransitionKeys.add(activeKey)
+			const mesh = planeMap.get(activeKey)
+			if (!mesh) {
+				tl.add(() => {
+					reconcilePlanesToIncomingPage({ planeMap, heroIndex })
+					activeTransitionKeys.delete(activeKey)
+				})
+				await tl
+				return
+			}
+			mesh.visible = true
+			if (mesh.material?.uniforms?.uAlpha) {
+				mesh.material.uniforms.uAlpha.value = 1
+			}
+			otherReturningMeshes.forEach(({ mesh: returningMesh, nextEl }) => {
+				returningMesh.userData.img = nextEl
+				returningMesh.visible = true
+			})
+			tl.to(
+				mesh.position,
+				{
+					x: left - window.innerWidth / 2 + width / 2,
+					y: -top + window.innerHeight / 2 - height / 2,
+					duration,
+				},
+				0,
+			)
+			tl.to(
+				mesh.scale,
+				{
+					x: width,
+					y: height,
+					duration,
+				},
+				0,
+			)
 
 			if (fadePages) {
 				tl.to(
@@ -161,24 +180,49 @@ export function createThreeHeroTransition(options) {
 					duration * 0.35,
 				)
 			}
+			if (otherReturningAlphaUniforms.length) {
+				tl.to(
+					otherReturningAlphaUniforms,
+					{
+						value: 1,
+						duration: Math.min(duration * 0.45, 0.3),
+						ease,
+					},
+					duration * 0.55,
+				)
+			}
 
 			tl.add(() => {
-				for (const el of hiddenElements) {
-					el.style.visibility = ''
-				}
-
-				for (const mesh of meshes) {
-					scene.remove(mesh)
-					mesh.geometry.dispose()
-					if (mesh.material?.map) mesh.material.map.dispose()
-					mesh.material.dispose()
-				}
-				console.log('mesh', meshes)
-				render({ renderer, scene, camera })
+				mesh.userData.img = toEl
+				toEl.style.visibility = ''
+				fromEl.style.visibility = ''
+				activeTransitionKeys.delete(activeKey)
+				reconcilePlanesToIncomingPage({
+					planeMap,
+					heroIndex,
+					resetAlpha: false,
+				})
 			})
-
 			await tl
 		},
+	}
+}
+
+function reconcilePlanesToIncomingPage({ planeMap, heroIndex, resetAlpha = true }) {
+	if (!(heroIndex instanceof Map)) return
+
+	for (const [key, mesh] of planeMap.entries()) {
+		if (!mesh) continue
+		const nextEl = heroIndex.get(key) || null
+		mesh.userData.img = nextEl
+		mesh.visible = Boolean(nextEl)
+		if (mesh.material?.uniforms?.uAlpha) {
+			if (!nextEl) {
+				mesh.material.uniforms.uAlpha.value = 0
+			} else if (resetAlpha) {
+				mesh.material.uniforms.uAlpha.value = 1
+			}
+		}
 	}
 }
 

@@ -10,7 +10,7 @@ export const heroTransition = createTransition(
 	({ from, to, tl, heroIndex }) => {
 		// 1. Find all matched elements between the two pages
 		const pairs = findPairs(from, heroIndex)
-
+		console.log('p2', pairs)
 		// 2. For each pair: measure true positions, clone, and fly
 		for (const { fromEl, toEl } of pairs) {
 			const { fromRect, toRect } = measurePair(fromEl, toEl, from, to)
