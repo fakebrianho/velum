@@ -4,6 +4,14 @@ import vertexShader from '../../shaders/vertex.glsl?raw'
 import fragmentShader from '../../shaders/fragment.glsl?raw'
 const imageMaterials = []
 
+export function hideWebGLImages(attr = 'data-webgl') {
+	if (document.querySelector(`style[data-webgl-hide="${attr}"]`)) return
+	const style = document.createElement('style')
+	style.setAttribute('data-webgl-hide', attr)
+	style.textContent = `img[${attr}] { visibility: hidden; }`
+	document.head.appendChild(style)
+}
+
 export function rectToWorldState({ rect, canvasRect, camera, planeZ = 0 }) {
 	const centerX = rect.left - canvasRect.left + rect.width / 2
 	const centerY = rect.top - canvasRect.top + rect.height / 2
@@ -29,6 +37,10 @@ export const setImageExposure = (value = 1) => {
 	imageMaterials.forEach((mat) => {
 		mat.uniforms.uExposure.value = exposure
 	})
+}
+
+export const replaceIMG = () => {
+	//
 }
 
 export const setImageSaturation = (value = 1) => {
@@ -69,6 +81,7 @@ const getContentBoxSize = (img) => {
 }
 
 export const loadImages = (scene, renderer, camera, planes, planeMap, planeZ = 0) => {
+	hideWebGLImages()
 	imageMaterials.length = 0
 	const canvasRect = renderer.domElement.getBoundingClientRect()
 	document.querySelectorAll('img[data-webgl]').forEach((img) => {
