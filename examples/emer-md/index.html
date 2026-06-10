@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jason Emer MD — Precision Aesthetic Medicine, Beverly Hills</title>
+    <meta name="description"
+        content="The flagship practice of Dr. Jason Emer. Cosmetic dermatology, surgery and the proprietary zone system — Structuronics, Reskin, Maxaris, Celesta.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+
+    <header class="site-header">
+        <a href="/" class="site-logo">Jason Emer <span>MD</span></a>
+        <div class="header-right">
+            <a href="/contact" class="header-cta">Consultation</a>
+            <button class="menu-toggle" data-menu-toggle aria-label="Open menu">
+                <span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <div class="menu-overlay" data-menu>
+        <div class="menu-inner">
+            <nav class="menu-nav">
+                <a href="/" class="menu-link"><sup>01</sup>Home</a>
+                <a href="/treatments" class="menu-link"><sup>02</sup>Treatments</a>
+                <a href="/results" class="menu-link"><sup>03</sup>Results</a>
+                <a href="/about" class="menu-link"><sup>04</sup>Dr. Emer</a>
+                <a href="/contact" class="menu-link"><sup>05</sup>Consultation</a>
+            </nav>
+            <div class="menu-search">
+                <label class="t-eyebrow" for="site-search">Search treatments, zones &amp; concerns</label>
+                <input type="search" id="site-search" data-search-input placeholder="Try “Botox”, “acne scars”, “filler”…"
+                    autocomplete="off">
+                <div class="search-results" data-search-results></div>
+            </div>
+        </div>
+        <div class="menu-foot">
+            <span>Beverly Hills, California</span>
+            <span>By appointment only</span>
+        </div>
+    </div>
+
+    <main data-router-view data-namespace="home" class="page">
+
+        <!-- HERO — aperture fold reveal -->
+        <section class="hero">
+            <div class="hero__stage" data-hero-stage>
+                <div class="hero__line"></div>
+                <div class="hero__line"></div>
+                <div class="hero__frame" data-hero-frame>
+                    <div class="hero__media" data-hero-media>
+                        <img src="https://picsum.photos/id/1027/1920/1280?grayscale"
+                            alt="High-contrast editorial portrait">
+                    </div>
+                    <div class="hero__content">
+                        <p class="t-eyebrow hero__eyebrow drawer"><span class="drawer__inner">Beverly Hills · Cosmetic
+                            Dermatology &amp; Surgery</span></p>
+                        <h1 class="t-display hero__title drawer"><span class="drawer__inner">Precision is the new
+                            beauty.</span></h1>
+                        <div class="hero__sub">
+                            <p class="t-body drawer"><span class="drawer__inner">The flagship practice of Dr. Jason
+                                Emer — where a proprietary anatomical zone system, branded treatment architecture and
+                                surgical artistry converge.</span></p>
+                            <span class="drawer"><span class="drawer__inner hero__scrollcue">Scroll</span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MANIFESTO -->
+        <section class="section">
+            <div class="shell">
+                <p class="t-statement manifesto" data-blur-words>Every face, every body is read in zones — evaluated,
+                    mapped and refined with clinical precision and an editorial eye. <span class="t-italic">Nothing
+                    generic. Nothing approximate.</span></p>
+            </div>
+        </section>
+
+        <!-- ZONE SYSTEM TEASE -->
+        <section class="section section--hairline">
+            <div class="shell">
+                <div class="duo">
+                    <div class="duo__media">
+                        <figure class="frame frame--tall" data-reveal-img>
+                            <img src="https://picsum.photos/id/64/1000/1400?grayscale" alt="Studio portrait, dramatic lighting">
+                            <figcaption class="frame__caption">The Zone System</figcaption>
+                        </figure>
+                    </div>
+                    <div class="duo__copy">
+                        <span class="t-eyebrow" data-reveal>Proprietary Taxonomy</span>
+                        <h2 class="t-headline" data-reveal>The anatomy, <span class="t-italic">renamed.</span></h2>
+                        <p class="t-body" data-reveal>Dr. Emer's trademark zone system divides the face and body into
+                            named territories — Mentruck<sup>™</sup> for the chin, Orbitoff<sup>™</sup> for the eyes,
+                            Brow-In<sup>™</sup> for the forehead, Zygomara<sup>™</sup> for the cheek.</p>
+                        <p class="t-body" data-reveal>Each zone is evaluated across six categories: movement lines,
+                            laxity, volume loss, texture &amp; tone, surgical need — and for the body, cellulite, veins
+                            and scarring.</p>
+                        <p data-reveal style="margin-top: 34px;"><a href="/treatments" class="link-cta">Explore the
+                            zones</a></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- HOUSES -->
+        <section class="section section--hairline">
+            <div class="shell">
+                <div class="section-head" data-reveal>
+                    <h2 class="t-headline">The Houses</h2>
+                    <span class="t-eyebrow">Branded treatment architecture</span>
+                </div>
+                <div class="houses" data-reveal>
+                    <a href="/treatments#reskin" class="house">
+                        <span class="house__num">01</span>
+                        <h3 class="house__name">Reskin<sup>™</sup></h3>
+                        <p class="house__tag">Acne Scar Treatment</p>
+                        <p class="house__desc">Three tiers — Restore, Repair, Rebirth — matched to scar severity, from
+                            resurfacing to full reconstruction of the skin's surface.</p>
+                    </a>
+                    <a href="/treatments#structuronics" class="house">
+                        <span class="house__num">02</span>
+                        <h3 class="house__name">Structuronics<sup>™</sup></h3>
+                        <p class="house__tag">Dermal Filler</p>
+                        <p class="house__desc">Filler architecture organized by layer — bone, tissue, surface — split by
+                            face and body, male and female.</p>
+                    </a>
+                    <a href="/treatments#maxaris" class="house">
+                        <span class="house__num">03</span>
+                        <h3 class="house__name">Maxaris<sup>™</sup></h3>
+                        <p class="house__tag">Male Body Surgery</p>
+                        <p class="house__desc">High-definition male body surgery — sculpting, etching and structural
+                            contouring engineered for masculine anatomy.</p>
+                    </a>
+                    <a href="/treatments#celesta" class="house">
+                        <span class="house__num">04</span>
+                        <h3 class="house__name">Celesta<sup>™</sup></h3>
+                        <p class="house__tag">Female Face &amp; Body</p>
+                        <p class="house__desc">The female treatment house — face and body programs balancing softness
+                            with sculptural definition.</p>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- RESULTS PREVIEW -->
+        <section class="section section--hairline">
+            <div class="shell">
+                <div class="section-head" data-reveal>
+                    <h2 class="t-headline">The proof is <span class="t-italic">in focus.</span></h2>
+                    <span class="t-eyebrow">Before &amp; After</span>
+                </div>
+                <div class="ba ba--wide" data-ba data-reveal-img>
+                    <img src="https://picsum.photos/id/65/1600/900?grayscale" alt="After — sharpened result" class="ba__img-after">
+                    <div class="ba__before">
+                        <img src="https://picsum.photos/id/65/1600/900?grayscale" alt="Before — softened state">
+                    </div>
+                    <div class="ba__handle"></div>
+                    <span class="ba__label ba__label--before">Before</span>
+                    <span class="ba__label ba__label--after">After</span>
+                </div>
+                <div style="margin-top: 40px; display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 20px;">
+                    <p class="t-body" data-reveal>Results filterable by treatment, gender and ethnicity — see
+                        transformations on people who look like you.</p>
+                    <p data-reveal><a href="/results" class="link-cta">View the gallery</a></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRESS MARQUEE -->
+        <div class="marquee" data-marquee>
+            <div class="marquee__track">
+                <span class="marquee__item">Vogue</span>
+                <span class="marquee__item">GQ</span>
+                <span class="marquee__item">Harper's Bazaar</span>
+                <span class="marquee__item">The Hollywood Reporter</span>
+                <span class="marquee__item">Allure</span>
+                <span class="marquee__item">W Magazine</span>
+                <span class="marquee__item">Town &amp; Country</span>
+            </div>
+        </div>
+
+        <!-- RECODEX BAND -->
+        <section class="recodex-band">
+            <div class="recodex-band__glow"></div>
+            <div class="shell">
+                <span class="t-eyebrow" data-reveal>Powered from within</span>
+                <h2 class="t-headline" data-reveal style="margin: 24px auto; max-width: 18ch;">Every transformation
+                    begins beneath the surface — <span class="t-accent">Recodex.</span></h2>
+                <p class="t-body" data-reveal style="margin: 0 auto 40px; text-align: center;">Peptides, IV protocols and
+                    internal optimization underpin every result in this practice.</p>
+                <p data-reveal><a href="/contact" class="link-cta">Ask about protocols</a></p>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="site-footer">
+            <div class="shell">
+                <div class="footer-cta">
+                    <span class="t-eyebrow" data-reveal>Begin</span>
+                    <a href="/contact" class="t-display" data-reveal>Book a consultation</a>
+                </div>
+                <div class="footer-grid">
+                    <span>© Jason Emer MD</span>
+                    <nav class="footer-links">
+                        <a href="/treatments">Treatments</a>
+                        <a href="/results">Results</a>
+                        <a href="/about">Dr. Emer</a>
+                        <a href="/contact">Contact</a>
+                    </nav>
+                    <span>Beverly Hills, CA</span>
+                </div>
+            </div>
+        </footer>
+
+    </main>
+
+    <script type="module" src="/main.js"></script>
+</body>
+
+</html>

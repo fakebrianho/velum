@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr. Jason Emer — The Physician | Jason Emer MD</title>
+    <meta name="description"
+        content="Dr. Jason Emer — board-certified dermatologist and cosmetic surgeon, Beverly Hills. The philosophy behind the zone system.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+
+    <header class="site-header">
+        <a href="/" class="site-logo">Jason Emer <span>MD</span></a>
+        <div class="header-right">
+            <a href="/contact" class="header-cta">Consultation</a>
+            <button class="menu-toggle" data-menu-toggle aria-label="Open menu">
+                <span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <div class="menu-overlay" data-menu>
+        <div class="menu-inner">
+            <nav class="menu-nav">
+                <a href="/" class="menu-link"><sup>01</sup>Home</a>
+                <a href="/treatments" class="menu-link"><sup>02</sup>Treatments</a>
+                <a href="/results" class="menu-link"><sup>03</sup>Results</a>
+                <a href="/about" class="menu-link"><sup>04</sup>Dr. Emer</a>
+                <a href="/contact" class="menu-link"><sup>05</sup>Consultation</a>
+            </nav>
+            <div class="menu-search">
+                <label class="t-eyebrow" for="site-search">Search treatments, zones &amp; concerns</label>
+                <input type="search" id="site-search" data-search-input placeholder="Try “Botox”, “acne scars”, “filler”…"
+                    autocomplete="off">
+                <div class="search-results" data-search-results></div>
+            </div>
+        </div>
+        <div class="menu-foot">
+            <span>Beverly Hills, California</span>
+            <span>By appointment only</span>
+        </div>
+    </div>
+
+    <main data-router-view data-namespace="about" class="page">
+
+        <section class="page-hero">
+            <div class="shell">
+                <span class="t-eyebrow" data-hero-fade>The Physician</span>
+                <div class="page-hero__row">
+                    <h1 class="t-display" data-split>Dr. Jason Emer</h1>
+                    <p class="t-body" data-hero-fade>Board-certified dermatologist. Cosmetic surgeon. Architect of the
+                        zone system and the branded houses that organize an entire practice of medicine.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" style="padding-top: clamp(30px, 5vh, 70px);">
+            <div class="shell">
+                <div class="duo">
+                    <div class="duo__media">
+                        <figure class="frame frame--tall" data-reveal-img>
+                            <img src="https://picsum.photos/id/91/1000/1400?grayscale" alt="Portrait of Dr. Emer, editorial black and white">
+                            <figcaption class="frame__caption">Beverly Hills, California</figcaption>
+                        </figure>
+                    </div>
+                    <div class="duo__copy">
+                        <span class="t-eyebrow" data-reveal>Philosophy</span>
+                        <h2 class="t-headline" data-reveal>Clinical precision, <span class="t-italic">editorial
+                            eye.</span></h2>
+                        <p class="t-body" data-reveal>Most practices treat procedures. This one treats anatomy — zone by
+                            zone, layer by layer. The trademark taxonomy isn't branding for its own sake; it's a
+                            diagnostic discipline that forces every consultation to consider movement, laxity, volume,
+                            surface and structure before a single treatment is proposed.</p>
+                        <p class="t-body" data-reveal>The result is work that reads as inevitable rather than done —
+                            high-fashion confidence built on medical rigor.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section section--hairline">
+            <div class="shell">
+                <div class="stats" data-reveal>
+                    <div class="stat">
+                        <div class="stat__value">15+</div>
+                        <div class="stat__label">Years in practice</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat__value">30k</div>
+                        <div class="stat__label">Procedures performed</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat__value">100+</div>
+                        <div class="stat__label">Peer-reviewed publications</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat__value">12</div>
+                        <div class="stat__label">Trademarked protocols</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section section--hairline">
+            <div class="shell">
+                <div class="duo duo--flip">
+                    <div class="duo__media">
+                        <figure class="frame frame--tall" data-reveal-img>
+                            <img src="https://picsum.photos/id/1012/1000/1400?grayscale" alt="In the operating suite">
+                            <figcaption class="frame__caption">The Practice</figcaption>
+                        </figure>
+                    </div>
+                    <div class="duo__copy">
+                        <span class="t-eyebrow" data-reveal>The Practice</span>
+                        <h2 class="t-headline" data-reveal>One ecosystem, <span class="t-italic">one standard.</span></h2>
+                        <p class="t-body" data-reveal>This site is the clinical backbone of a wider ecosystem — every
+                            transformation story, every internal-optimization protocol, every result links back to the
+                            educational depth held here.</p>
+                        <p class="t-body" data-reveal>Surgery is paired with internal optimization. Results are
+                            documented like case studies. Patients are followed like protagonists.</p>
+                        <p data-reveal style="margin-top: 34px;"><a href="/treatments" class="link-cta">The treatment
+                            architecture</a></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="marquee" data-marquee>
+            <div class="marquee__track">
+                <span class="marquee__item">Vogue</span>
+                <span class="marquee__item">GQ</span>
+                <span class="marquee__item">Harper's Bazaar</span>
+                <span class="marquee__item">The Hollywood Reporter</span>
+                <span class="marquee__item">Allure</span>
+                <span class="marquee__item">W Magazine</span>
+                <span class="marquee__item">Town &amp; Country</span>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="site-footer">
+            <div class="shell">
+                <div class="footer-cta">
+                    <span class="t-eyebrow" data-reveal>Begin</span>
+                    <a href="/contact" class="t-display" data-reveal>Book a consultation</a>
+                </div>
+                <div class="footer-grid">
+                    <span>© Jason Emer MD</span>
+                    <nav class="footer-links">
+                        <a href="/treatments">Treatments</a>
+                        <a href="/results">Results</a>
+                        <a href="/about">Dr. Emer</a>
+                        <a href="/contact">Contact</a>
+                    </nav>
+                    <span>Beverly Hills, CA</span>
+                </div>
+            </div>
+        </footer>
+
+    </main>
+
+    <script type="module" src="/main.js"></script>
+</body>
+
+</html>

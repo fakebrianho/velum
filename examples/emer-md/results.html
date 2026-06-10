@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results — Before &amp; After Gallery | Jason Emer MD</title>
+    <meta name="description"
+        content="Before and after results by Dr. Jason Emer, filterable by treatment, gender and ethnicity.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+
+    <header class="site-header">
+        <a href="/" class="site-logo">Jason Emer <span>MD</span></a>
+        <div class="header-right">
+            <a href="/contact" class="header-cta">Consultation</a>
+            <button class="menu-toggle" data-menu-toggle aria-label="Open menu">
+                <span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <div class="menu-overlay" data-menu>
+        <div class="menu-inner">
+            <nav class="menu-nav">
+                <a href="/" class="menu-link"><sup>01</sup>Home</a>
+                <a href="/treatments" class="menu-link"><sup>02</sup>Treatments</a>
+                <a href="/results" class="menu-link"><sup>03</sup>Results</a>
+                <a href="/about" class="menu-link"><sup>04</sup>Dr. Emer</a>
+                <a href="/contact" class="menu-link"><sup>05</sup>Consultation</a>
+            </nav>
+            <div class="menu-search">
+                <label class="t-eyebrow" for="site-search">Search treatments, zones &amp; concerns</label>
+                <input type="search" id="site-search" data-search-input placeholder="Try “Botox”, “acne scars”, “filler”…"
+                    autocomplete="off">
+                <div class="search-results" data-search-results></div>
+            </div>
+        </div>
+        <div class="menu-foot">
+            <span>Beverly Hills, California</span>
+            <span>By appointment only</span>
+        </div>
+    </div>
+
+    <main data-router-view data-namespace="results" class="page">
+
+        <section class="page-hero">
+            <div class="shell">
+                <span class="t-eyebrow" data-hero-fade>Before &amp; After</span>
+                <div class="page-hero__row">
+                    <h1 class="t-display" data-split>Results</h1>
+                    <p class="t-body" data-hero-fade>Drag each slider to move from before to after. Filter by gender and
+                        ethnicity — transformation should be visible on people who look like you.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" style="padding-top: clamp(30px, 5vh, 60px);">
+            <div class="shell">
+
+                <div class="filter-bar" data-filter-bar data-reveal>
+                    <div class="filter-group">
+                        <span class="filter-group__label">Gender</span>
+                        <button class="filter-btn is-active" data-filter-gender="all">All</button>
+                        <button class="filter-btn" data-filter-gender="female">Female</button>
+                        <button class="filter-btn" data-filter-gender="male">Male</button>
+                    </div>
+                    <div class="filter-group">
+                        <span class="filter-group__label">Ethnicity</span>
+                        <button class="filter-btn is-active" data-filter-ethnicity="all">All</button>
+                        <button class="filter-btn" data-filter-ethnicity="asian">Asian</button>
+                        <button class="filter-btn" data-filter-ethnicity="indian">Indian</button>
+                        <button class="filter-btn" data-filter-ethnicity="dark-skin">Dark Skin</button>
+                        <button class="filter-btn" data-filter-ethnicity="latino">Latino</button>
+                        <button class="filter-btn" data-filter-ethnicity="mixed">Mixed</button>
+                    </div>
+                </div>
+
+                <div class="results-grid" data-results-grid>
+
+                    <article class="result-card" data-gender="female" data-ethnicity="asian" data-reveal>
+                        <div class="ba ba--tall" data-ba>
+                            <img src="https://picsum.photos/id/64/900/1200?grayscale" alt="After result">
+                            <div class="ba__before"><img src="https://picsum.photos/id/64/900/1200?grayscale" alt="Before"></div>
+                            <div class="ba__handle"></div>
+                            <span class="ba__label ba__label--before">Before</span>
+                            <span class="ba__label ba__label--after">After</span>
+                        </div>
+                        <div class="result-card__meta">
+                            <h3 class="result-card__name">Structuronics™ <span class="alt">dermal filler</span></h3>
+                            <span class="result-card__tags">Female · Asian</span>
+                        </div>
+                    </article>
+
+                    <article class="result-card" data-gender="male" data-ethnicity="latino" data-reveal>
+                        <div class="ba ba--tall" data-ba>
+                            <img src="https://picsum.photos/id/1005/900/1200?grayscale" alt="After result">
+                            <div class="ba__before"><img src="https://picsum.photos/id/1005/900/1200?grayscale" alt="Before"></div>
+                            <div class="ba__handle"></div>
+                            <span class="ba__label ba__label--before">Before</span>
+                            <span class="ba__label ba__label--after">After</span>
+                        </div>
+                        <div class="result-card__meta">
+                            <h3 class="result-card__name">Maxaris™ <span class="alt">hi-def sculpting</span></h3>
+                            <span class="result-card__tags">Male · Latino</span>
+                        </div>
+                    </article>
+
+                    <article class="result-card" data-gender="female" data-ethnicity="dark-skin" data-reveal>
+                        <div class="ba ba--tall" data-ba>
+                            <img src="https://picsum.photos/id/1011/900/1200?grayscale" alt="After result">
+                            <div class="ba__before"><img src="https://picsum.photos/id/1011/900/1200?grayscale" alt="Before"></div>
+                            <div class="ba__handle"></div>
+                            <span class="ba__label ba__label--before">Before</span>
+                            <span class="ba__label ba__label--after">After</span>
+                        </div>
+                        <div class="result-card__meta">
+                            <h3 class="result-card__name">Reskin™ Repair <span class="alt">acne scars</span></h3>
+                            <span class="result-card__tags">Female · Dark Skin</span>
+                        </div>
+                    </article>
+
+                    <article class="result-card" data-gender="male" data-ethnicity="indian" data-reveal>
+                        <div class="ba ba--tall" data-ba>
+                            <img src="https://picsum.photos/id/177/900/1200?grayscale" alt="After result">
+                            <div class="ba__before"><img src="https://picsum.photos/id/177/900/1200?grayscale" alt="Before"></div>
+                            <div class="ba__handle"></div>
+                            <span class="ba__label ba__label--before">Before</span>
+                            <span class="ba__label ba__label--after">After</span>
+                        </div>
+                        <div class="result-card__meta">
+                            <h3 class="result-card__name">Mentruck™ <span class="alt">chin &amp; jawline</span></h3>
+                            <span class="result-card__tags">Male · Indian</span>
+                        </div>
+                    </article>
+
+                    <article class="result-card" data-gender="female" data-ethnicity="mixed" data-reveal>
+                        <div class="ba ba--tall" data-ba>
+                            <img src="https://picsum.photos/id/65/900/1200?grayscale" alt="After result">
+                            <div class="ba__before"><img src="https://picsum.photos/id/65/900/1200?grayscale" alt="Before"></div>
+                            <div class="ba__handle"></div>
+                            <span class="ba__label ba__label--before">Before</span>
+                            <span class="ba__label ba__label--after">After</span>
+                        </div>
+                        <div class="result-card__meta">
+                            <h3 class="result-card__name">Celesta™ Face <span class="alt">facial balancing</span></h3>
+                            <span class="result-card__tags">Female · Mixed</span>
+                        </div>
+                    </article>
+
+                    <article class="result-card" data-gender="male" data-ethnicity="dark-skin" data-reveal>
+                        <div class="ba ba--tall" data-ba>
+                            <img src="https://picsum.photos/id/823/900/1200?grayscale" alt="After result">
+                            <div class="ba__before"><img src="https://picsum.photos/id/823/900/1200?grayscale" alt="Before"></div>
+                            <div class="ba__handle"></div>
+                            <span class="ba__label ba__label--before">Before</span>
+                            <span class="ba__label ba__label--after">After</span>
+                        </div>
+                        <div class="result-card__meta">
+                            <h3 class="result-card__name">Orbitoff™ <span class="alt">eye rejuvenation</span></h3>
+                            <span class="result-card__tags">Male · Dark Skin</span>
+                        </div>
+                    </article>
+
+                    <article class="result-card" data-gender="female" data-ethnicity="latino" data-reveal>
+                        <div class="ba ba--tall" data-ba>
+                            <img src="https://picsum.photos/id/342/900/1200?grayscale" alt="After result">
+                            <div class="ba__before"><img src="https://picsum.photos/id/342/900/1200?grayscale" alt="Before"></div>
+                            <div class="ba__handle"></div>
+                            <span class="ba__label ba__label--before">Before</span>
+                            <span class="ba__label ba__label--after">After</span>
+                        </div>
+                        <div class="result-card__meta">
+                            <h3 class="result-card__name">Celesta™ Body <span class="alt">body contouring</span></h3>
+                            <span class="result-card__tags">Female · Latino</span>
+                        </div>
+                    </article>
+
+                    <article class="result-card" data-gender="male" data-ethnicity="asian" data-reveal>
+                        <div class="ba ba--tall" data-ba>
+                            <img src="https://picsum.photos/id/103/900/1200?grayscale" alt="After result">
+                            <div class="ba__before"><img src="https://picsum.photos/id/103/900/1200?grayscale" alt="Before"></div>
+                            <div class="ba__handle"></div>
+                            <span class="ba__label ba__label--before">Before</span>
+                            <span class="ba__label ba__label--after">After</span>
+                        </div>
+                        <div class="result-card__meta">
+                            <h3 class="result-card__name">Source Code™ <span class="alt">hair PRP</span></h3>
+                            <span class="result-card__tags">Male · Asian</span>
+                        </div>
+                    </article>
+
+                    <article class="result-card" data-gender="female" data-ethnicity="indian" data-reveal>
+                        <div class="ba ba--tall" data-ba>
+                            <img src="https://picsum.photos/id/338/900/1200?grayscale" alt="After result">
+                            <div class="ba__before"><img src="https://picsum.photos/id/338/900/1200?grayscale" alt="Before"></div>
+                            <div class="ba__handle"></div>
+                            <span class="ba__label ba__label--before">Before</span>
+                            <span class="ba__label ba__label--after">After</span>
+                        </div>
+                        <div class="result-card__meta">
+                            <h3 class="result-card__name">Zygomara™ <span class="alt">cheek structure</span></h3>
+                            <span class="result-card__tags">Female · Indian</span>
+                        </div>
+                    </article>
+
+                </div>
+
+                <p class="search-empty" data-results-empty hidden style="text-align:center; padding: 60px 0;">No results
+                    for this combination yet — new cases are added weekly.</p>
+
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="site-footer">
+            <div class="shell">
+                <div class="footer-cta">
+                    <span class="t-eyebrow" data-reveal>Begin</span>
+                    <a href="/contact" class="t-display" data-reveal>Book a consultation</a>
+                </div>
+                <div class="footer-grid">
+                    <span>© Jason Emer MD</span>
+                    <nav class="footer-links">
+                        <a href="/treatments">Treatments</a>
+                        <a href="/results">Results</a>
+                        <a href="/about">Dr. Emer</a>
+                        <a href="/contact">Contact</a>
+                    </nav>
+                    <span>Beverly Hills, CA</span>
+                </div>
+            </div>
+        </footer>
+
+    </main>
+
+    <script type="module" src="/main.js"></script>
+</body>
+
+</html>

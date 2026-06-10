@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Treatments — The Zone System | Jason Emer MD</title>
+    <meta name="description"
+        content="Dr. Emer's proprietary zone taxonomy and branded treatment houses — Reskin acne scar treatment, Structuronics dermal filler, Maxaris male body surgery, Celesta female face and body.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+
+    <header class="site-header">
+        <a href="/" class="site-logo">Jason Emer <span>MD</span></a>
+        <div class="header-right">
+            <a href="/contact" class="header-cta">Consultation</a>
+            <button class="menu-toggle" data-menu-toggle aria-label="Open menu">
+                <span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <div class="menu-overlay" data-menu>
+        <div class="menu-inner">
+            <nav class="menu-nav">
+                <a href="/" class="menu-link"><sup>01</sup>Home</a>
+                <a href="/treatments" class="menu-link"><sup>02</sup>Treatments</a>
+                <a href="/results" class="menu-link"><sup>03</sup>Results</a>
+                <a href="/about" class="menu-link"><sup>04</sup>Dr. Emer</a>
+                <a href="/contact" class="menu-link"><sup>05</sup>Consultation</a>
+            </nav>
+            <div class="menu-search">
+                <label class="t-eyebrow" for="site-search">Search treatments, zones &amp; concerns</label>
+                <input type="search" id="site-search" data-search-input placeholder="Try “Botox”, “acne scars”, “filler”…"
+                    autocomplete="off">
+                <div class="search-results" data-search-results></div>
+            </div>
+        </div>
+        <div class="menu-foot">
+            <span>Beverly Hills, California</span>
+            <span>By appointment only</span>
+        </div>
+    </div>
+
+    <main data-router-view data-namespace="treatments" class="page">
+
+        <section class="page-hero">
+            <div class="shell">
+                <span class="t-eyebrow" data-hero-fade>Treatment Architecture</span>
+                <div class="page-hero__row">
+                    <h1 class="t-display" data-split>The Zone System</h1>
+                    <p class="t-body" data-hero-fade>Anatomy divided into trademarked territories. Every zone evaluated
+                        across six categories. Every treatment carrying two names — ours, and the one you searched
+                        for.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ZONE TAXONOMY -->
+        <section class="section" style="padding-top: clamp(40px, 6vh, 80px);">
+            <div class="shell">
+                <div class="zone-list" data-reveal>
+                    <div class="zone-row">
+                        <span class="zone-row__num">Z·01</span>
+                        <h2 class="zone-row__name">Brow-In<sup>™</sup></h2>
+                        <span class="zone-row__anat">Forehead</span>
+                        <span class="zone-row__cats">Movement lines · laxity · texture &amp; tone</span>
+                    </div>
+                    <div class="zone-row">
+                        <span class="zone-row__num">Z·02</span>
+                        <h2 class="zone-row__name">Orbitoff<sup>™</sup></h2>
+                        <span class="zone-row__anat">Eyes</span>
+                        <span class="zone-row__cats">Laxity · volume loss · surgical need</span>
+                    </div>
+                    <div class="zone-row">
+                        <span class="zone-row__num">Z·03</span>
+                        <h2 class="zone-row__name">Zygomara<sup>™</sup></h2>
+                        <span class="zone-row__anat">Cheek</span>
+                        <span class="zone-row__cats">Volume loss · texture &amp; tone · structure</span>
+                    </div>
+                    <div class="zone-row">
+                        <span class="zone-row__num">Z·04</span>
+                        <h2 class="zone-row__name">Mentruck<sup>™</sup></h2>
+                        <span class="zone-row__anat">Chin &amp; Jaw</span>
+                        <span class="zone-row__cats">Projection · laxity · surgical need</span>
+                    </div>
+                    <div class="zone-row">
+                        <span class="zone-row__num">Z·05</span>
+                        <h2 class="zone-row__name">Cervalis<sup>™</sup></h2>
+                        <span class="zone-row__anat">Neck</span>
+                        <span class="zone-row__cats">Laxity · movement lines · texture</span>
+                    </div>
+                    <div class="zone-row">
+                        <span class="zone-row__num">Z·06</span>
+                        <h2 class="zone-row__name">Torsana<sup>™</sup></h2>
+                        <span class="zone-row__anat">Torso &amp; Body</span>
+                        <span class="zone-row__cats">Volume · laxity · cellulite, veins &amp; scarring</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SIX EVALUATION CATEGORIES -->
+        <section class="section section--hairline">
+            <div class="shell">
+                <div class="section-head" data-reveal>
+                    <h2 class="t-headline">Six lenses, <span class="t-italic">one zone at a time.</span></h2>
+                    <span class="t-eyebrow">Evaluation Categories</span>
+                </div>
+                <div class="eval-grid" data-reveal>
+                    <div class="eval-cell">
+                        <span class="eval-cell__num">I</span>
+                        <h3>Movement Lines</h3>
+                        <p>Dynamic creasing from expression — treated with neuromodulators, mapped to zone musculature.</p>
+                        <span class="note">Botox · Dysport · Daxxify</span>
+                    </div>
+                    <div class="eval-cell">
+                        <span class="eval-cell__num">II</span>
+                        <h3>Laxity</h3>
+                        <p>Loss of tension and lift — addressed with energy devices, threads or surgical tightening.</p>
+                        <span class="note">RF · Ultrasound · Surgery</span>
+                    </div>
+                    <div class="eval-cell">
+                        <span class="eval-cell__num">III</span>
+                        <h3>Volume Loss</h3>
+                        <p>Structural deflation across bone, tissue and surface layers — the Structuronics™ domain.</p>
+                        <span class="note">Structuronics™ · Dermal Filler</span>
+                    </div>
+                    <div class="eval-cell">
+                        <span class="eval-cell__num">IV</span>
+                        <h3>Texture · Color · Tone</h3>
+                        <p>Surface quality — pigment, pores, scarring — refined with lasers, peels and Reskin™ protocols.</p>
+                        <span class="note">Lasers · Reskin™ · Peels</span>
+                    </div>
+                    <div class="eval-cell">
+                        <span class="eval-cell__num">V</span>
+                        <h3>Surgical Need</h3>
+                        <p>Where injectables end and structure begins — candid surgical assessment per zone.</p>
+                        <span class="note">Maxaris™ · Celesta™</span>
+                    </div>
+                    <div class="eval-cell">
+                        <span class="eval-cell__num">VI</span>
+                        <h3>Cellulite · Veins · Scarring</h3>
+                        <p>Body-only evaluation — surface irregularity, vascularity and scar revision planning.</p>
+                        <span class="note">Body zones only</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- HOUSES — DETAIL -->
+        <section class="section section--hairline">
+            <div class="shell">
+                <div class="section-head" data-reveal>
+                    <h2 class="t-headline">The Houses</h2>
+                    <span class="t-eyebrow">Branded · Searchable · Dual-named</span>
+                </div>
+
+                <article class="tx-block" id="reskin" data-reveal>
+                    <header class="tx-block__head">
+                        <span class="t-eyebrow">House 01</span>
+                        <h2>Reskin<sup>™</sup></h2>
+                        <p class="tx-block__seo">Also searched as: acne scar treatment · scar removal</p>
+                    </header>
+                    <div class="tx-block__body">
+                        <p class="t-body">Acne scarring treated in tiers, matched to severity and skin type. Each tier
+                            combines subcision, resurfacing, energy and regenerative protocols.</p>
+                        <ul class="tier-list">
+                            <li><span class="tier-name">Restore</span><span class="tier-desc">Mild texture · tone
+                                correction · maintenance resurfacing</span></li>
+                            <li><span class="tier-name">Repair</span><span class="tier-desc">Moderate scarring ·
+                                subcision · fractional resurfacing</span></li>
+                            <li><span class="tier-name">Rebirth</span><span class="tier-desc">Severe scarring · full
+                                reconstruction protocol</span></li>
+                        </ul>
+                    </div>
+                </article>
+
+                <article class="tx-block" id="structuronics" data-reveal>
+                    <header class="tx-block__head">
+                        <span class="t-eyebrow">House 02</span>
+                        <h2>Structuronics<sup>™</sup></h2>
+                        <p class="tx-block__seo">Also searched as: dermal filler · facial filler · body filler</p>
+                    </header>
+                    <div class="tx-block__body">
+                        <p class="t-body">Filler treated as architecture, not volume. Organized by anatomical layer and
+                            tailored by face or body, male or female.</p>
+                        <ul class="tier-list">
+                            <li><span class="tier-name">Bone Layer</span><span class="tier-desc">Skeletal projection ·
+                                structural foundation</span></li>
+                            <li><span class="tier-name">Tissue Layer</span><span class="tier-desc">Deep volume ·
+                                contour restoration</span></li>
+                            <li><span class="tier-name">Surface Layer</span><span class="tier-desc">Fine refinement ·
+                                skin-level finish</span></li>
+                        </ul>
+                    </div>
+                </article>
+
+                <article class="tx-block" id="maxaris" data-reveal>
+                    <header class="tx-block__head">
+                        <span class="t-eyebrow">House 03</span>
+                        <h2>Maxaris<sup>™</sup></h2>
+                        <p class="tx-block__seo">Also searched as: male liposuction · hi-def body sculpting · ab etching</p>
+                    </header>
+                    <div class="tx-block__body">
+                        <p class="t-body">The male body surgery house — high-definition sculpting engineered for
+                            masculine anatomy. Etching, contouring and structural augmentation, evaluated through the
+                            body zone categories including cellulite, veins and scarring.</p>
+                        <p style="margin-top: 10px;"><a href="/results" class="link-cta">Male results</a></p>
+                    </div>
+                </article>
+
+                <article class="tx-block" id="celesta" data-reveal>
+                    <header class="tx-block__head">
+                        <span class="t-eyebrow">House 04</span>
+                        <h2>Celesta<sup>™</sup></h2>
+                        <p class="tx-block__seo">Also searched as: female body contouring · facial balancing</p>
+                    </header>
+                    <div class="tx-block__body">
+                        <p class="t-body">The female house, spanning face and body. Programs balance softness with
+                            sculptural definition — from facial harmonization through full-body contouring, every plan
+                            built zone by zone.</p>
+                        <p style="margin-top: 10px;"><a href="/results" class="link-cta">Female results</a></p>
+                    </div>
+                </article>
+
+                <article class="tx-block" id="source-code" data-reveal>
+                    <header class="tx-block__head">
+                        <span class="t-eyebrow">Protocol</span>
+                        <h2>Source Code<sup>™</sup></h2>
+                        <p class="tx-block__seo">Also searched as: PRP injections · platelet-rich plasma</p>
+                    </header>
+                    <div class="tx-block__body">
+                        <p class="t-body">Regenerative PRP protocols woven through every house — hair restoration,
+                            microneedling, joint and intimate wellness applications. Your own biology, concentrated and
+                            redirected.</p>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="site-footer">
+            <div class="shell">
+                <div class="footer-cta">
+                    <span class="t-eyebrow" data-reveal>Begin</span>
+                    <a href="/contact" class="t-display" data-reveal>Book a consultation</a>
+                </div>
+                <div class="footer-grid">
+                    <span>© Jason Emer MD</span>
+                    <nav class="footer-links">
+                        <a href="/treatments">Treatments</a>
+                        <a href="/results">Results</a>
+                        <a href="/about">Dr. Emer</a>
+                        <a href="/contact">Contact</a>
+                    </nav>
+                    <span>Beverly Hills, CA</span>
+                </div>
+            </div>
+        </footer>
+
+    </main>
+
+    <script type="module" src="/main.js"></script>
+</body>
+
+</html>

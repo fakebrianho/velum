@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consultation — Jason Emer MD</title>
+    <meta name="description"
+        content="Begin a consultation with Dr. Jason Emer in Beverly Hills. By appointment only.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+
+    <header class="site-header">
+        <a href="/" class="site-logo">Jason Emer <span>MD</span></a>
+        <div class="header-right">
+            <a href="/contact" class="header-cta">Consultation</a>
+            <button class="menu-toggle" data-menu-toggle aria-label="Open menu">
+                <span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <div class="menu-overlay" data-menu>
+        <div class="menu-inner">
+            <nav class="menu-nav">
+                <a href="/" class="menu-link"><sup>01</sup>Home</a>
+                <a href="/treatments" class="menu-link"><sup>02</sup>Treatments</a>
+                <a href="/results" class="menu-link"><sup>03</sup>Results</a>
+                <a href="/about" class="menu-link"><sup>04</sup>Dr. Emer</a>
+                <a href="/contact" class="menu-link"><sup>05</sup>Consultation</a>
+            </nav>
+            <div class="menu-search">
+                <label class="t-eyebrow" for="site-search">Search treatments, zones &amp; concerns</label>
+                <input type="search" id="site-search" data-search-input placeholder="Try “Botox”, “acne scars”, “filler”…"
+                    autocomplete="off">
+                <div class="search-results" data-search-results></div>
+            </div>
+        </div>
+        <div class="menu-foot">
+            <span>Beverly Hills, California</span>
+            <span>By appointment only</span>
+        </div>
+    </div>
+
+    <main data-router-view data-namespace="contact" class="page">
+
+        <section class="page-hero">
+            <div class="shell">
+                <span class="t-eyebrow" data-hero-fade>Consultation</span>
+                <div class="page-hero__row">
+                    <h1 class="t-display" data-split>Begin.</h1>
+                    <p class="t-body" data-hero-fade>Every plan starts with a zone-by-zone evaluation. Tell us where to
+                        look first.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" style="padding-top: clamp(30px, 5vh, 60px);">
+            <div class="shell">
+                <form class="consult-form" data-reveal onsubmit="return false;">
+                    <div class="field">
+                        <label for="f-name">Full name</label>
+                        <input id="f-name" type="text" name="name" autocomplete="name">
+                    </div>
+                    <div class="field">
+                        <label for="f-email">Email</label>
+                        <input id="f-email" type="email" name="email" autocomplete="email">
+                    </div>
+                    <div class="field">
+                        <label for="f-phone">Phone</label>
+                        <input id="f-phone" type="tel" name="phone" autocomplete="tel">
+                    </div>
+                    <div class="field">
+                        <label for="f-interest">Area of interest</label>
+                        <select id="f-interest" name="interest">
+                            <option value="">Select…</option>
+                            <option>Reskin™ — Acne Scars</option>
+                            <option>Structuronics™ — Filler</option>
+                            <option>Maxaris™ — Male Body Surgery</option>
+                            <option>Celesta™ — Female Face &amp; Body</option>
+                            <option>Source Code™ — PRP</option>
+                            <option>Botox / Neuromodulators</option>
+                            <option>Surgical Consultation</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                    <div class="field field--full">
+                        <label for="f-message">What would you like to refine?</label>
+                        <textarea id="f-message" name="message" rows="3"></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn-solid" type="submit">Request consultation</button>
+                        <p class="form-note">Submissions are reviewed by the clinical team. Consultations are by
+                            appointment only.</p>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <section class="section section--hairline">
+            <div class="shell">
+                <div class="info-cols" data-reveal>
+                    <div class="info-col">
+                        <h3>Visit</h3>
+                        <p>9201 Sunset Boulevard<br>Suite 600<br>West Hollywood, CA 90069</p>
+                    </div>
+                    <div class="info-col">
+                        <h3>Contact</h3>
+                        <a href="tel:+13105551234">+1 (310) 555-1234</a>
+                        <a href="mailto:concierge@jasonemermd.com">concierge@jasonemermd.com</a>
+                    </div>
+                    <div class="info-col">
+                        <h3>Hours</h3>
+                        <p>Monday — Friday · 9a to 6p<br>Saturday · By arrangement<br>Sunday · Closed</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="site-footer">
+            <div class="shell">
+                <div class="footer-grid">
+                    <span>© Jason Emer MD</span>
+                    <nav class="footer-links">
+                        <a href="/treatments">Treatments</a>
+                        <a href="/results">Results</a>
+                        <a href="/about">Dr. Emer</a>
+                        <a href="/contact">Contact</a>
+                    </nav>
+                    <span>Beverly Hills, CA</span>
+                </div>
+            </div>
+        </footer>
+
+    </main>
+
+    <script type="module" src="/main.js"></script>
+</body>
+
+</html>
